@@ -1,6 +1,18 @@
 const graphql = require('graphql')
 const { GraphQLSchema, GraphQLObjectType, GraphQLString, GraphQLList, GraphQLInt } = graphql
 
+function getAuthor(authorId){
+    return authors.filter((author) => {
+        return author.id === authorId;
+    })[0];
+}
+
+function getPost(id) {
+    return posts.filter((post) => {
+        return post.id === id;
+    })[0];
+}
+
 const authors = [
     { id: '88d6bec2', name: 'Xavier Decuyper', email: 'xavier@awesomeblog.com' },
     { id: '77e2448a', name: 'Jessie Baker', email: 'jessie@awesomeblog.com' },
@@ -44,7 +56,7 @@ const authorType =  new GraphQLObjectType({
       type: GraphQLString
     },
     email: {
-      type: GraphQLInt
+      type: GraphQLString
     }
   }
 })
@@ -53,7 +65,7 @@ const postType =  new GraphQLObjectType({
   name: 'Post',
   fields: {
     id: {
-        type: GraphQLString
+        type: GraphQLInt
     },
     title: {
       type: GraphQLString
@@ -64,7 +76,8 @@ const postType =  new GraphQLObjectType({
     author: {
       type: authorType,
       resolve: (source, params) => {
-        return authors[source.author]
+          console.log(source.author)
+        return getAuthor(source.author)
       }
     }
   }
@@ -79,7 +92,7 @@ const queryType =  new GraphQLObjectType({
         id: { type: GraphQLInt }
       },
       resolve: (source, {id}) => {
-        return posts[id]
+        return getPost(id)
       }
     },
     posts: {
@@ -87,7 +100,22 @@ const queryType =  new GraphQLObjectType({
       resolve: () => {
         return posts
       }
-    }
+    },
+    authors: {
+        type: new GraphQLList(authorType),
+        resolve: () => {
+          return authors
+        }
+    },
+    author: {
+        type: authorType,
+        args: {
+          id: { type: GraphQLString }
+        },
+        resolve: (source, {id}) => {
+          return getAuthor(id)
+        }
+      },
   }
 })
 
