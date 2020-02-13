@@ -11,8 +11,7 @@ describe('GET /', () => {
         name  
       } 
     } `
-    response  = await  request(app)
-    .post('/graphql').send({ query:  query_string})
+    response  = await  request(app).post('/graphql').send({ query:  query_string})
     expect(response.body.data.authors[0].name).toBe("Xavier Decuyper")
     })
 });
@@ -27,9 +26,9 @@ describe('GET /', () => {
         name    
       }       
     }`
-    response  = await  request(app)
-    .post('/graphql').send({ query:  query_string})
+    response  = await  request(app).post('/graphql').send({ query:  query_string})
     expect(response.body.data.author.name).toBe("Xavier Decuyper")
+
     })
 });
 
@@ -47,10 +46,10 @@ describe('GET /', () => {
         }       
       }       
     }`
-    response  = await  request(app)
-    .post('/graphql').send({ query:  query_string})
+    response  = await  request(app).post('/graphql').send({ query:  query_string})
       expect(response.body.data.author.name).toBe("Xavier Decuyper")
       expect(response.body.data.author.posts[0].id).toBe(1)
+      console.log(response.body.data.author)
     })
 });
 
@@ -67,6 +66,7 @@ describe('GET /', () => {
      }`
     response  = await  request(app).post('/graphql').send({ query:  query_string})
     expect(response.body.data.post.id).toBe(1)
+    console.log(response.body.data.post)
     
     })
 });
@@ -83,10 +83,10 @@ describe('GET /', () => {
       }
     }
     }`
-    response  = await  request(app)
-      .post('/graphql').send({ query:  query_string})
+    response  = await  request(app).post('/graphql').send({ query:  query_string})
     expect(response.body.data.posts[0].title).toBe("My first blog post")
     expect(response.body.data.posts[0].author.name).toBe("Xavier Decuyper")
+    console.log(response.body.data.posts)
     
     })
 });

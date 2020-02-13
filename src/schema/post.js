@@ -21,8 +21,7 @@ export const PostType =  new GraphQLObjectType({
     author: {
       type: AuthorType,
       resolve: (source, params) => {
-          console.log(source.author)
-            return fakeDatabase.getAuthor(source.author)
+        return fakeDatabase.getAuthor(source.author)
       }
     }
   })

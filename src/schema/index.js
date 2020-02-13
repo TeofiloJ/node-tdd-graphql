@@ -3,51 +3,6 @@ const { GraphQLSchema, GraphQLObjectType, GraphQLString, GraphQLList, GraphQLInt
 
 import { fakeDatabase } from '../fake.database'
 
-
-// const AuthorType =  new GraphQLObjectType({
-//   name: 'Author',
-//   fields: ()=> ( {
-//     id: {
-//         type: GraphQLString
-//     },
-//     name: {
-//       type: GraphQLString
-//     },
-//     email: {
-//       type: GraphQLString
-//     },
-//     posts: {
-//       type: new GraphQLList(PostType),
-//       resolve: (source, params) => {
-//           console.log(source.id)
-//           return fakeDatabase.getPostsOfAuthor(source.id)
-//       }
-//     }
-//   })
-// })
-
-// const PostType =  new GraphQLObjectType({
-//   name: 'Post',
-//   fields: () => ({
-//     id: {
-//         type: GraphQLInt
-//     },
-//     title: {
-//       type: GraphQLString
-//     },
-//     content: {
-//       type: GraphQLString
-//     },
-//     author: {
-//       type: AuthorType,
-//       resolve: (source, params) => {
-//           console.log(source.author)
-//             return fakeDatabase.getAuthor(source.author)
-//       }
-//     }
-//   })
-// })
-
 import {AuthorType} from "./author";
 import {PostType} from "./post";
 
