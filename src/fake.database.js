@@ -39,8 +39,11 @@ class FakeDatabase{
     //                      READ METHODS
     // ------------------------------------------------------------
     getBlogPosts() {
-        // Here you would make a db connection + query + return data
         return this.blogPosts;
+    }
+
+    getAuthors() {
+        return this.authors;
     }
 
     getBlogPost(id) {

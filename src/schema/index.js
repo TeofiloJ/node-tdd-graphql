@@ -1,50 +1,7 @@
 const graphql = require('graphql')
 const { GraphQLSchema, GraphQLObjectType, GraphQLString, GraphQLList, GraphQLInt } = graphql
 
-function getAuthor(authorId){
-    return authors.filter((author) => {
-        return author.id === authorId;
-    })[0];
-}
-
-function getPost(id) {
-    return posts.filter((post) => {
-        return post.id === id;
-    })[0];
-}
-
-const authors = [
-    { id: '88d6bec2', name: 'Xavier Decuyper', email: 'xavier@awesomeblog.com' },
-    { id: '77e2448a', name: 'Jessie Baker', email: 'jessie@awesomeblog.com' },
-    { id: '0beb564c', name: 'Adam Richards', email: 'adam@awesomeblog.com' }
-];
-
-const posts = [
-    {
-        id: 1,
-        title: 'My first blog post',
-        content: 'This is my very first blog post. Hope you like it!',
-        author: '88d6bec2',
-    },
-    {
-        id: 2,
-        title: 'Second blog post',
-        content: 'Back for another round!',
-        author: '0beb564c',
-    },
-    {
-        id: 3,
-        title: 'Building a REST API',
-        content: 'A pratical guide on how to build your own REST API.',
-        author: '77e2448a',
-    }
-];
-
-const comments = [
-    { id: 1, postId: 1, name: 'Anonymous', content: 'Good luck with your blog!' },
-    { id: 2, postId: 1, name: 'Nick', content: 'Great first article. Do you have an RSS feed?' },
-    { id: 3, postId: 3, name: 'Peter', content: 'You should check out GraphQL. It\'s way better and Savjee has a great tutorial on it!' },
-]
+import { fakeDatabase } from '../fake.database'
 
 const authorType =  new GraphQLObjectType({
   name: 'Author',
@@ -77,7 +34,7 @@ const postType =  new GraphQLObjectType({
       type: authorType,
       resolve: (source, params) => {
           console.log(source.author)
-        return getAuthor(source.author)
+            return fakeDatabase.getAuthor(source.author)
       }
     }
   }
@@ -92,19 +49,19 @@ const queryType =  new GraphQLObjectType({
         id: { type: GraphQLInt }
       },
       resolve: (source, {id}) => {
-        return getPost(id)
+        return fakeDatabase.getPost(id)
       }
     },
     posts: {
       type: new GraphQLList(postType),
       resolve: () => {
-        return posts
+        return fakeDatabase.getBlogPosts()
       }
     },
     authors: {
         type: new GraphQLList(authorType),
         resolve: () => {
-          return authors
+          return fakeDatabase.getAuthors()
         }
     },
     author: {
@@ -113,7 +70,7 @@ const queryType =  new GraphQLObjectType({
           id: { type: GraphQLString }
         },
         resolve: (source, {id}) => {
-          return getAuthor(id)
+          return fakeDatabase.getAuthor(id)
         }
       },
   }
