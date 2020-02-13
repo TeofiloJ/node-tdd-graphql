@@ -49,8 +49,8 @@ describe('GET /', () => {
     }`
     response  = await  request(app)
     .post('/graphql').send({ query:  query_string})
-      console.log(response.data)
       expect(response.body.data.author.name).toBe("Xavier Decuyper")
+      expect(response.body.data.author.posts[0].id).toBe(1)
     })
 });
 
@@ -65,9 +65,7 @@ describe('GET /', () => {
         content
       } 
      }`
-    response  = await  request(app)
-      .post('/graphql').send({ query:  query_string})
-      console.log(response)
+    response  = await  request(app).post('/graphql').send({ query:  query_string})
     expect(response.body.data.post.id).toBe(1)
     
     })
