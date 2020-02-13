@@ -5,7 +5,7 @@ import request from 'supertest'
 
 describe('GET /', () => {
   let response
-  test('get all authors', async () =>{
+  test('get an author', async () =>{
     const query_string = `{
       authors {
         name  
@@ -13,7 +13,6 @@ describe('GET /', () => {
     } `
     response  = await  request(app)
     .post('/graphql').send({ query:  query_string})
-    console.log(response.body)
     expect(response.body.data.authors[0].name).toBe("Xavier Decuyper")
     })
 });
@@ -30,7 +29,6 @@ describe('GET /', () => {
     }`
     response  = await  request(app)
     .post('/graphql').send({ query:  query_string})
-    console.log(response.body)
     expect(response.body.data.author.name).toBe("Xavier Decuyper")
     })
 });
@@ -51,12 +49,30 @@ describe('GET /', () => {
     }`
     response  = await  request(app)
     .post('/graphql').send({ query:  query_string})
-    console.log(response.data)
-    expect(response.body.data.author.name).toBe("Xavier Decuyper")
+      console.log(response.data)
+      expect(response.body.data.author.name).toBe("Xavier Decuyper")
     })
 });
 
 // POSTS
+
+describe('GET /', () => {
+  let response
+  test('get a post with content', async () =>{
+    const query_string = `{
+      post(id: 1) {
+        id
+        content
+      } 
+     }`
+    response  = await  request(app)
+      .post('/graphql').send({ query:  query_string})
+      console.log(response)
+    expect(response.body.data.post.id).toBe(1)
+    
+    })
+});
+
 
 describe('GET /', () => {
   let response
@@ -72,6 +88,8 @@ describe('GET /', () => {
     response  = await  request(app)
       .post('/graphql').send({ query:  query_string})
     expect(response.body.data.posts[0].title).toBe("My first blog post")
+    expect(response.body.data.posts[0].author.name).toBe("Xavier Decuyper")
+    
     })
 });
 

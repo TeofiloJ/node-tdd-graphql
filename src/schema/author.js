@@ -8,7 +8,7 @@ import {PostType} from "./post";
 
 export const AuthorType =  new GraphQLObjectType({
   name: 'Author',
-  fields: {
+  fields: ()=> ( {
     id: {
         type: GraphQLString
     },
@@ -18,12 +18,12 @@ export const AuthorType =  new GraphQLObjectType({
     email: {
       type: GraphQLString
     },
-    // posts: {
-    //     type: new GraphQLList(PostType),
-    //     resolve: (source, params) => {
-    //         console.log(source.id)
-    //         return fakeDatabase.getPostsOfAuthor(source.id)
-    //     }
-    //   }
-  }
+    posts: {
+      type: new GraphQLList(PostType),
+      resolve: (source, params) => {
+          console.log(source.id)
+          return fakeDatabase.getPostsOfAuthor(source.id)
+      }
+    }
+  })
 })

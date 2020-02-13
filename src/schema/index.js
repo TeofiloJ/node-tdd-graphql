@@ -6,7 +6,7 @@ import { fakeDatabase } from '../fake.database'
 
 // const AuthorType =  new GraphQLObjectType({
 //   name: 'Author',
-//   fields: {
+//   fields: ()=> ( {
 //     id: {
 //         type: GraphQLString
 //     },
@@ -17,18 +17,18 @@ import { fakeDatabase } from '../fake.database'
 //       type: GraphQLString
 //     },
 //     posts: {
-//         type: new GraphQLList(PostType),
-//         resolve: (source, params) => {
-//             console.log(source.id)
-//             return fakeDatabase.getPostsOfAuthor(source.id)
-//         }
+//       type: new GraphQLList(PostType),
+//       resolve: (source, params) => {
+//           console.log(source.id)
+//           return fakeDatabase.getPostsOfAuthor(source.id)
 //       }
-//   }
+//     }
+//   })
 // })
 
-// PostType =  new GraphQLObjectType({
+// const PostType =  new GraphQLObjectType({
 //   name: 'Post',
-//   fields: {
+//   fields: () => ({
 //     id: {
 //         type: GraphQLInt
 //     },
@@ -45,7 +45,7 @@ import { fakeDatabase } from '../fake.database'
 //             return fakeDatabase.getAuthor(source.author)
 //       }
 //     }
-//   }
+//   })
 // })
 
 import {AuthorType} from "./author";
@@ -60,7 +60,8 @@ const queryType =  new GraphQLObjectType({
         id: { type: GraphQLInt }
       },
       resolve: (source, {id}) => {
-        return fakeDatabase.getPost(id)
+         var res = fakeDatabase.getBlogPost(id)
+         return res;
       }
     },
     posts: {
